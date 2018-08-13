@@ -4,7 +4,7 @@
 
 	<groupId>com.jdocapi</groupId>
 	<artifactId>jdoc</artifactId>
-	<version>1.2.1</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 	<name>JDoc</name>
 	<properties>
