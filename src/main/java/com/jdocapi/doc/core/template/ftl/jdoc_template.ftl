@@ -1072,6 +1072,10 @@
             success: function (data) {
                 var jsonhtml = formatJson(data);
                 $(target).parents(".form").siblings(".form-content").html(jsonhtml);
+            },
+            error: function (data) {
+                var jsonhtml = formatJson(data);
+                $(target).parents(".form").siblings(".form-content").html(jsonhtml);
             }
         });
     }

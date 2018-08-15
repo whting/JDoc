@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.cglib.core.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,6 +66,9 @@ public class SpringMVCApiParser extends AbstractApiParser {
 			String classAuthor = getTitle(classDocTags);
 			MethodDoc[] methodDocs = classDoc.methods(false);
 
+			if(methodDocs == null || methodDocs.length == 0){
+				continue;
+			}
 			Class<?> controllerClass = null;
 			try {
 				controllerClass = Class.forName(classDoc.qualifiedTypeName());
@@ -128,7 +132,9 @@ public class SpringMVCApiParser extends AbstractApiParser {
 				apiAction.setDesc(methodDoc.commentText());
 				apiActions.add(apiAction);
 			}
-
+			if(apiActions.size()<=0){
+				continue;
+			}
 			api.setApiActions(apiActions);
 			apis.add(api);
 		}

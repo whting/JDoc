@@ -1,11 +1,12 @@
 package com.wht.hello;
 
-import com.wht.hello.bean.User;
-import com.wht.hello.common.MessageResp;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.wht.hello.bean.User;
+import com.wht.hello.common.MessageResp;
 
 /**
  * 用户模块
@@ -76,7 +77,7 @@ public class UserController {
      * @title 查询ID查用户22
      * @respBody {"code":"100000","data":{"password":"123456","username":"13811111111"},"message":"获取成功"}
      * @respParamBean MessageResp
-     * @respParamBean User
+     * @respSubParamBean User
      * @see com.wht.hello.common.MessageResp
      * @see com.wht.hello.bean.User
      */
