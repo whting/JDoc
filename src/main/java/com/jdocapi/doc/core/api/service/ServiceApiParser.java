@@ -44,8 +44,14 @@ public class ServiceApiParser extends AbstractApiParser {
 		for (ClassDoc classDoc : classDocs) {
 
 			Api api = new Api();
-			api.setTitle(classDoc.commentText());
 
+			Tag[] classDocTags = classDoc.tags();
+			String classAuthor = getAuthor(classDocTags);
+			if(classAuthor == null || "".equals(classAuthor)){
+				continue;
+			}
+
+			api.setTitle(classDoc.commentText());
 			MethodDoc[] methodDocs = classDoc.methods(false);
 
 			Class<?> controllerClass = null;

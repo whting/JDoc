@@ -38,7 +38,8 @@ public abstract class AbstractApiParser {
             String tagText = tag.text();
             String[] descs = tagText.split("\\s+");
             if (descs.length < 2) {
-                throw new JDocException("the param formater dose not match jdoc formater " + tagText);
+             //   throw new JDocException("the param formater dose not match jdoc formater " + tagText);
+                continue;
             }
             if(descs.length < 4 ){
                 if(descs.length == 3){

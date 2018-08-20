@@ -50,13 +50,16 @@ public class BeanDocumentParser {
                 Class<?> classBean = Class.forName(beanClassDoc.qualifiedName());
                 fields = classBean.getDeclaredFields();
             } catch (ClassNotFoundException e) {
-
+                System.out.println(e);
             }
 
             for (int i = 0; i < fieldDocs.length; i++) {
                 FieldDoc fieldDoc = fieldDocs[i];
-                Field field = fields[i];
-                String required = getJSR303ValidationMessage(field);
+                String required="";
+                if(fields!=null){
+                    Field field = fields[i];
+                    required = getJSR303ValidationMessage(field);
+                }
                 String typeName = fieldDoc.type().typeName();
                 String commentText = fieldDoc.commentText();
 
@@ -67,7 +70,13 @@ public class BeanDocumentParser {
                 if (!DataUtils.isSimpleType(typeName)) {
                     Tag[] tags = fieldDoc.tags();
                     generateSeeTag(tags);
-                    List<Param> paramList = BeanParamContainer.getParam(typeName);
+                    List<Param> paramList;
+                    List<Tag> subType = getTagsByTag(tags, "@subType");
+                    if(subType !=null && subType.size()>0){
+                        paramList = BeanParamContainer.getParam(subType.get(0).text());
+                    }else{
+                        paramList = BeanParamContainer.getParam(typeName);
+                    }
                     if (paramList != null && !paramList.isEmpty()) {
                         param.setParams(paramList);
                     }
