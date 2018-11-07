@@ -87,6 +87,7 @@ public abstract class AbstractApiParser {
         List<ApiResponseParam> apiResponseParams = new ArrayList<ApiResponseParam>();
         List<Tag> paramTags = getTagsByTag(tags, "@respParam");
         List<Tag> respParamBeanTags = getTagsByTag(tags, "@respParamBean");
+        List<Tag> respParamListBeanTags = getTagsByTag(tags, "@respParamListBean");
         List<Tag> respSubParamBeanTags = getTagsByTag(tags, "@respSubParamBean");
         for (Tag tag : paramTags) {
             ApiResponseParam apiResponseParam = new ApiResponseParam();
@@ -136,6 +137,18 @@ public abstract class AbstractApiParser {
                     throw new JDocException("not find "+beanName+" bean on see tag");
                 }
                 apiResponseParams.addAll(beanapiResponseParams);
+            }
+        }
+        if (respParamListBeanTags != null && !respParamListBeanTags.isEmpty()) {
+            generateSeeTag(tags);
+            for (Tag paramListBeanTag : respParamListBeanTags) {
+                ApiResponseParam apiResponseParam = new ApiResponseParam();
+                apiResponseParam.setType("List");
+                apiResponseParam.setRequired("必填");
+                apiResponseParam.setDesc("列表");
+                apiResponseParam.setName("List<"+paramListBeanTag.text()+">");
+                apiResponseParam.setSubApiResponseParam(BeanParamContainer.getApiResponseParam(paramListBeanTag.text()));
+                apiResponseParams.add(apiResponseParam);
             }
         }
         return apiResponseParams;
